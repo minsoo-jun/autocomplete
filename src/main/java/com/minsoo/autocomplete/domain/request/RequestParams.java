@@ -1,6 +1,6 @@
 package com.minsoo.autocomplete.domain.request;
 
-import static com.minsoo.autocomplete.Constants.Constants.DEFAULT_LIMITED_NUMBER;
+import static com.minsoo.autocomplete.constants.Constants.DEFAULT_LIMITED_NUMBER;
 
 public class RequestParams {
 

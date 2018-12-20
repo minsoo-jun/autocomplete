@@ -1,0 +1,55 @@
+
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggest Tag</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });        
+        $(function () {
+            var getData = function (request, response) {
+                $.getJSON(
+                    "http://localhost:8080/ec/autocomplete/en/" + request.term,
+                    function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.name
+                            }
+                        }));
+                    });
+            };
+
+            var selectItem = function (event, ui) {
+                $("#search").val(ui.item.label);
+                return false;
+            };
+
+            $("#search").autocomplete({
+                source: getData,
+                select: selectItem,
+                minLength: 1
+            });
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<div class="ui-widget" style="padding: 10px;padding-left: 40px;">
+    <label for="search">Product Name: </label>
+    <input id="search" style="background-color: #3CBC8D;padding: 5px;width: 60%;">
+</div>
+<!--<input id="myText"/>-->
+</body>
+</html>

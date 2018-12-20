@@ -1,4 +1,4 @@
-package com.minsoo.autocomplete.Constants;
+package com.minsoo.autocomplete.constants;
 
 public class Constants {
     public static final String SEARCH_WORD = "searchWord";
