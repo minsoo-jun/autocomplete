@@ -7,4 +7,7 @@ public class Constants {
 
     public static final int DEFAULT_LIMITED_NUMBER = 10;
 
+    public static final String JA_SUPPORT = "ja";
+    public static final String EN_SUPPORT = "en";
+
 }

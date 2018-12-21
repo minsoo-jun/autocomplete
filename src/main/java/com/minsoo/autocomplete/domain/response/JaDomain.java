@@ -3,13 +3,12 @@ package com.minsoo.autocomplete.domain.response;
 import com.minsoo.autocomplete.domain.Category;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.Score;
 
 import java.util.List;
 
-@Document(indexName = "products-en", type = "document")
-public class AutocompleteDomain {
+@Document(indexName = "products-ja", type = "document")
+public class JaDomain {
     @Id
     private int id;
     private String name;
