@@ -11,7 +11,7 @@ public class RequestParams {
     public RequestParams(String searchWord, String language, int limited) {
         this.searchWord = searchWord;
         this.language = language;
-        if(limited ==0){
+        if(limited == 0){
             this.limited = DEFAULT_LIMITED_NUMBER;
         }else{
             this.limited = limited;

@@ -17,7 +17,11 @@
     <label for="search">Product Name: </label>
     <input id="search" style="background-color: #3CBC8D;padding: 5px;width: 60%;">
 </div>
+<div style="padding: 10px;padding-left: 40px;">
+    Response Time: <label id="responsetime" style="color:red"></label> ms
+</div>
 <script>
+    var responseTime;
     $(function() {
         function highlightText(text, $node) {
             var searchText = $.trim(text).toLowerCase(), currentNode = $node.get(0).firstChild, matchIndex, newTextNode, newSpanNode;
@@ -31,6 +35,7 @@
             }
         }
         var getData = function (request, response) {
+            responseTime = new Date().getTime();
             $.getJSON(
                 "http://localhost:8080/ec/autocomplete/en/" + request.term,
                 function (data) {
@@ -46,6 +51,7 @@
         }).data("ui-autocomplete")._renderItem = function(ul, item) {
             var $div = $("<div></div>").text(item.label);
             highlightText(this.term, $div);
+            $("#responsetime").text(new Date().getTime() - responseTime);
             return $("<li></li>").append($div).appendTo(ul);
         };
     });
