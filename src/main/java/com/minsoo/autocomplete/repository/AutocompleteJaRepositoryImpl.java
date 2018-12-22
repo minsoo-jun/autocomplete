@@ -8,5 +8,6 @@ import java.util.List;
 public interface AutocompleteJaRepositoryImpl extends ElasticsearchRepository<JaDomain, Integer> {
 
     List<JaDomain> findByName(String name);
+    List<JaDomain> findByNameLike(String name);
 
 }
