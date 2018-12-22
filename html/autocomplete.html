@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+    <title>jQuery UI Autocomplete: Highlight Matched Text</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        .ui-autocomplete .highlight {
+            text-decoration: underline;
+            color: #A9A9A9;
+        }
+    </style>
+</head>
+<body>
+<div class="ui-widget" style="padding: 10px;padding-left: 40px;">
+    <label for="search">Product Name: </label>
+    <input id="search" style="background-color: #3CBC8D;padding: 5px;width: 60%;">
+</div>
+<script>
+    $(function() {
+        function highlightText(text, $node) {
+            var searchText = $.trim(text).toLowerCase(), currentNode = $node.get(0).firstChild, matchIndex, newTextNode, newSpanNode;
+            while ((matchIndex = currentNode.data.toLowerCase().indexOf(searchText)) >= 0) {
+                newTextNode = currentNode.splitText(matchIndex);
+                currentNode = newTextNode.splitText(searchText.length);
+                newSpanNode = document.createElement("span");
+                newSpanNode.className = "highlight";
+                currentNode.parentNode.insertBefore(newSpanNode, currentNode);
+                newSpanNode.appendChild(newTextNode);
+            }
+        }
+        var getData = function (request, response) {
+            $.getJSON(
+                "http://localhost:8080/ec/autocomplete/en/" + request.term,
+                function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.name
+                        }
+                    }));
+                });
+        };
+        $("#search").autocomplete({
+            source: getData
+        }).data("ui-autocomplete")._renderItem = function(ul, item) {
+            var $div = $("<div></div>").text(item.label);
+            highlightText(this.term, $div);
+            return $("<li></li>").append($div).appendTo(ul);
+        };
+    });
+</script>
+</body>
