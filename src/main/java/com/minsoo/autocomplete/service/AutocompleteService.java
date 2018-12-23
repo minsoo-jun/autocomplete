@@ -31,7 +31,7 @@ public class AutocompleteService {
         List autocompList = new ArrayList();
 
         if(EN_SUPPORT.equals(rp.getLanguage())){
-            //하일라이트를 하는 방법이 명확하지 않아서 실패!
+            //HTML + Javascript로 구현해서 불필요.
             //autocompList = highlight.highlightEnString(autoEnRepo.findByNameLike(rp.getSearchWord()),rp);
             autocompList = autoEnRepo.findByNameLike(rp.getSearchWord());
         }else if(JA_SUPPORT.equals(rp.getLanguage())){
