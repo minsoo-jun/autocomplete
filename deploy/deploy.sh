@@ -16,10 +16,8 @@ chmod +x ${APP_HOME}/${JAR_NAME}.jar
 sudo rm -f /etc/init.d/${JAR_NAME}
 sudo ln -s ${APP_HOME}/${JAR_NAME}.jar /etc/init.d/${JAR_NAME}
 
+# ${JAR_NAME}.conf -> -Dspring.profiles.active=[mac | prod | local]
 sudo /etc/init.d/${JAR_NAME} restart
-## make ln
-## /etc/init.d/autocomplete
 
-## application restart
 
 

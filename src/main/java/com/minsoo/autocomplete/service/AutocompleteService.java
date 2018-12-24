@@ -32,15 +32,14 @@ public class AutocompleteService {
 
         if(EN_SUPPORT.equals(rp.getLanguage())){
             // if data exists in redis
-            if(redisService.getFromRedis(rp.getSearchWord()) != null && redisService.getFromRedis(rp.getSearchWord()).size() > 0){
+            if(rp.isUseCache() && (redisService.getFromRedis(rp.getSearchWord()) != null && redisService.getFromRedis(rp.getSearchWord()).size() > 0)){
                 System.out.println("*** Data from redis");
                 autocompList = redisService.getFromRedis(rp.getSearchWord()) ;
             }else{
-                System.out.println("*** Data from es");
+                System.out.println("### Data from es");
                 autocompList = autoEnRepo.findByNameLike(rp.getSearchWord());
                 //TODO set to redis.
                 if(autocompList.size() > 0) {
-                    System.out.println("*** Set to redis");
                     redisService.setToReids(rp.getSearchWord(), autocompList);
                 }
 
@@ -51,7 +50,7 @@ public class AutocompleteService {
                 autocompList = redisService.getFromRedis(rp.getSearchWord()) ;
             }else{
                 autocompList = autoJaRepo.findByName(rp.getSearchWord());
-                if(autocompList.size() > 0) {
+                if(rp.isUseCache() && autocompList.size() > 0) {
                     redisService.setToReids(rp.getSearchWord(), autocompList);
                 }
             }

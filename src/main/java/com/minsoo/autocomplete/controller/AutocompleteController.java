@@ -30,14 +30,10 @@ public class AutocompleteController {
     @CrossOrigin
     public ResponseEntity<List<EnDomain>> getAutocomplete(@PathVariable(SEARCH_WORD) String searchWord
             , @PathVariable(value = LANGUAGE) String language
-            , @RequestParam(value = LIMITED, defaultValue = "10") int limited
+            , @RequestParam(value = USE_CACHE, defaultValue = "false") boolean useCache
         ){
-
         //파라메터 세팅
-        RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), limited);
-
-        // Redis cache check.
-
+        RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), useCache);
 
         return as.getAutocompleteData(rp);
     }

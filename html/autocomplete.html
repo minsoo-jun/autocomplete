@@ -18,6 +18,9 @@
     <input id="search" style="background-color: #3CBC8D;padding: 5px;width: 60%;">
 </div>
 <div style="padding: 10px;padding-left: 40px;">
+    <input type="checkbox" name="useCache" id="useCache" value="true"> Use Cache
+</div>
+<div style="padding: 10px;padding-left: 40px;">
     Response Time: <label id="responsetime" style="color:red"></label> ms
 </div>
 <script>
@@ -37,7 +40,7 @@
         var getData = function (request, response) {
             responseTime = new Date().getTime();
             $.getJSON(
-                "http://35.243.104.154/ec/autocomplete/en/" + request.term,
+                "http://35.243.104.154/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
                 function (data) {
                     response($.map(data, function (item) {
                         return {

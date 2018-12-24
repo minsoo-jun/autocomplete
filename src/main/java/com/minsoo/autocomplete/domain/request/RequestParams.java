@@ -6,16 +6,12 @@ public class RequestParams {
 
     private String searchWord;
     private String language;
-    private int limited;
+    private boolean useCache;
 
-    public RequestParams(String searchWord, String language, int limited) {
+    public RequestParams(String searchWord, String language, boolean useCache) {
         this.searchWord = searchWord;
         this.language = language;
-        if(limited == 0){
-            this.limited = DEFAULT_LIMITED_NUMBER;
-        }else{
-            this.limited = limited;
-        }
+        this.useCache = useCache;
     }
 
     public String getSearchWord() {
@@ -26,7 +22,12 @@ public class RequestParams {
         return language;
     }
 
-    public int getLimited() {
-        return limited;
+
+    public boolean isUseCache() {
+        return useCache;
+    }
+
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
     }
 }
