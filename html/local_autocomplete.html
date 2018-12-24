@@ -37,7 +37,7 @@
         var getData = function (request, response) {
             responseTime = new Date().getTime();
             $.getJSON(
-                "http://35.243.104.154/ec/autocomplete/en/" + request.term,
+                "http://localhost:8080/ec/autocomplete/en/" + request.term,
                 function (data) {
                     response($.map(data, function (item) {
                         return {

@@ -10,4 +10,6 @@ public class Constants {
     public static final String JA_SUPPORT = "ja";
     public static final String EN_SUPPORT = "en";
 
+    public static final int REDIS_EXPIRE_MIN = 1;
+
 }

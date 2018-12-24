@@ -25,18 +25,37 @@ public class AutocompleteService {
     AutocompleteJaRepositoryImpl autoJaRepo;
 
     @Autowired
-    StringHighlight highlight;
+    AutocompleteRedisService redisService;
 
     public ResponseEntity getAutocompleteData(RequestParams rp){
         List autocompList = new ArrayList();
 
         if(EN_SUPPORT.equals(rp.getLanguage())){
-            //HTML + Javascript로 구현해서 불필요.
-            //autocompList = highlight.highlightEnString(autoEnRepo.findByNameLike(rp.getSearchWord()),rp);
-            autocompList = autoEnRepo.findByNameLike(rp.getSearchWord());
+            // if data exists in redis
+            if(redisService.getFromRedis(rp.getSearchWord()) != null && redisService.getFromRedis(rp.getSearchWord()).size() > 0){
+                System.out.println("*** Data from redis");
+                autocompList = redisService.getFromRedis(rp.getSearchWord()) ;
+            }else{
+                System.out.println("*** Data from es");
+                autocompList = autoEnRepo.findByNameLike(rp.getSearchWord());
+                //TODO set to redis.
+                if(autocompList.size() > 0) {
+                    System.out.println("*** Set to redis");
+                    redisService.setToReids(rp.getSearchWord(), autocompList);
+                }
+
+            }
+
         }else if(JA_SUPPORT.equals(rp.getLanguage())){
-            System.out.println("JA Support");
-            autocompList = autoJaRepo.findByName(rp.getSearchWord());
+            if(redisService.getFromRedis(rp.getSearchWord()).size() > 0){
+                autocompList = redisService.getFromRedis(rp.getSearchWord()) ;
+            }else{
+                autocompList = autoJaRepo.findByName(rp.getSearchWord());
+                if(autocompList.size() > 0) {
+                    redisService.setToReids(rp.getSearchWord(), autocompList);
+                }
+            }
+
         }
         return new ResponseEntity<>(autocompList, HttpStatus.OK);
     }

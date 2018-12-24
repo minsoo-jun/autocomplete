@@ -6,6 +6,7 @@ import com.minsoo.autocomplete.repository.AutocompleteEnRepositoryImpl;
 import com.minsoo.autocomplete.repository.AutocompleteJaRepositoryImpl;
 import com.minsoo.autocomplete.service.AutocompleteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,10 @@ public class AutocompleteController {
             , @RequestParam(value = LIMITED, defaultValue = "10") int limited
         ){
 
-        //TODO parameter check.
         //파라메터 세팅
         RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), limited);
+
+        // Redis cache check.
 
 
         return as.getAutocompleteData(rp);
