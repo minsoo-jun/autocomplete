@@ -27,17 +27,27 @@
     var responseTime;
     $(function() {
         function highlightText(text, $node) {
-            var searchText = $.trim(text).toLowerCase(), currentNode = $node.get(0).firstChild, matchIndex, newTextNode, newSpanNode;
-            while ((matchIndex = currentNode.data.toLowerCase().indexOf(searchText)) >= 0) {
-                newTextNode = currentNode.splitText(matchIndex);
-                currentNode = newTextNode.splitText(searchText.length);
-                newSpanNode = document.createElement("span");
-                newSpanNode.className = "highlight";
-                currentNode.parentNode.insertBefore(newSpanNode, currentNode);
-                newSpanNode.appendChild(newTextNode);
+            var searchTextSource = $.trim(text).toLowerCase(), currentNode = $node.get(0).firstChild, matchIndex, newTextNode, newSpanNode;
+            var originalNode = $node.get(0).firstChild;
+            searchTexts = searchTextSource.split(" ");
+            for(var i = 0; i < searchTexts.length ; i ++ ){
+                searchText = searchTexts[i];
+                while ((matchIndex = currentNode.data.toLowerCase().indexOf(searchText)) >= 0) {
+                    newTextNode = currentNode.splitText(matchIndex);
+                    currentNode = newTextNode.splitText(searchText.length);
+                    newSpanNode = document.createElement("span");
+                    newSpanNode.className = "highlight";
+                    currentNode.parentNode.insertBefore(newSpanNode, currentNode);
+                    newSpanNode.appendChild(newTextNode);
+                }
+                currentNode = originalNode;
+                matchIndex = 0;
+                newTextNode = "";
+                newSpanNode = "";
             }
         }
         var getData = function (request, response) {
+            var boolQueryType = $("input[type='radio'][name='boolquery']:checked");
             responseTime = new Date().getTime();
             $.getJSON(
                 "http://localhost:8080/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
@@ -59,4 +69,5 @@
         };
     });
 </script>
+<div id="debug"></div>
 </body>

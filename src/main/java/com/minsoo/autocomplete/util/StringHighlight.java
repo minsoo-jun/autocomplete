@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @Component
 public class StringHighlight {
@@ -65,23 +66,30 @@ public class StringHighlight {
      * @return
      */
     public String toBoldReverse(String nameInput, String targetWordInput){
-        String name = nameInput.toUpperCase();
-        String targetWord = targetWordInput.toUpperCase();
+        String name = nameInput.toLowerCase();
+        String targetWords = targetWordInput.toLowerCase();
+
+        StringTokenizer st = new StringTokenizer(targetWords, " ");
 
         StringBuffer sb = new StringBuffer();
-        String tagStart = "<span style=\"color:blue\">";
+        String tagStart = "<span class=\"highlight\">";
         String tagEnd = "</span>";
-        int strPoint = name.indexOf(targetWord);
-        // not find
-        if(strPoint < 0){
-            System.out.println("Not Found: " + name);
-            return name;
+        String targetWord = "";
+        for(int i =0 ; st.hasMoreTokens(); i++){
+            targetWord = st.nextToken();
+            int strPoint = name.indexOf(targetWord);
+            // not find
+            if(strPoint < 0){
+                System.out.println("Not Found: " + name);
+                return name;
+            }
+            if(name.indexOf(targetWord) > 0) {
+                sb.append(nameInput.substring(0, name.indexOf(targetWord)));
+            }
+            sb.append(tagStart + (nameInput.substring(name.indexOf(targetWord), name.indexOf(targetWord) + targetWord.length())) + tagEnd);
+            sb.append(nameInput.substring(name.indexOf(targetWord) + targetWord.length(), nameInput.length()));
         }
-        if(name.indexOf(targetWord) > 0) {
-            sb.append(nameInput.substring(0, name.indexOf(targetWord)));
-        }
-        sb.append(tagStart + (nameInput.substring(name.indexOf(targetWord), name.indexOf(targetWord) + targetWord.length())) + tagEnd);
-        sb.append(nameInput.substring(name.indexOf(targetWord) + targetWord.length(), nameInput.length()));
+
         System.out.println("Result: " + sb.toString());
 
         return sb.toString();

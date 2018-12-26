@@ -1,7 +1,5 @@
 package com.minsoo.autocomplete.domain.request;
 
-import static com.minsoo.autocomplete.constants.Constants.DEFAULT_LIMITED_NUMBER;
-
 public class RequestParams {
 
     private String searchWord;
@@ -22,12 +20,8 @@ public class RequestParams {
         return language;
     }
 
-
     public boolean isUseCache() {
         return useCache;
     }
 
-    public void setUseCache(boolean useCache) {
-        this.useCache = useCache;
-    }
 }

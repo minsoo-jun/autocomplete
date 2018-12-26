@@ -10,7 +10,7 @@ import java.util.List;
 @Document(indexName = "products-en", type = "document")
 public class EnDomain {
     @Id
-    private int id;
+    private String id;
     private String name;
     @Score
     private Float score;
@@ -18,6 +18,16 @@ public class EnDomain {
     private List<Category> category ;
     private String url;
     private String image;
+    // meta info
+    private List<String> highlights;
+
+    public List<String> getHighlights() {
+        return highlights;
+    }
+
+    public void setHighlights(List<String> highlights) {
+        this.highlights = highlights;
+    }
 
     public String getUrl() { return url;}
 
@@ -47,9 +57,9 @@ public class EnDomain {
         this.sku = sku;
     }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
     public List<Category> getCategory() { return category; }
 
