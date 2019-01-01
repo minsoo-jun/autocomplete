@@ -1,13 +1,10 @@
 package com.minsoo.autocomplete.service;
 
-import com.minsoo.autocomplete.domain.response.EnDomain;
-import com.minsoo.autocomplete.domain.response.JaDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 

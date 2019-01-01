@@ -1,6 +1,13 @@
-<!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
     <title>Demo Autocomplete</title>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -13,15 +20,31 @@
     </style>
 </head>
 <body>
-<div class="ui-widget" style="padding: 10px;padding-left: 40px;">
-    <label for="search">Product Name: </label>
-    <input id="search" style="background-color: #3CBC8D;padding: 5px;width: 60%;">
-</div>
-<div style="padding: 10px;padding-left: 40px;">
-    <input type="checkbox" name="useCache" id="useCache" value="true"> Use Cache
-</div>
-<div style="padding: 10px;padding-left: 40px;">
-    Response Time: <label id="responsetime" style="color:red"></label> ms
+<div class="s013">
+    <form>
+        <fieldset>
+            <legend>QUICK FIND YOUR ITEMS</legend>
+        </fieldset>
+        <div style="padding: 10px;">
+            Response Time: <label id="responsetime" style="color:red"></label> ms
+        </div>
+        <div class="inner-form">
+            <div class="left">
+                <div class="input-wrap first">
+                    <div class="input-field first">
+                        <label>WHAT</label>
+                        <input type="text" id="search" placeholder="ex: mouse tv iphone" />
+                    </div>
+                </div>
+            </div>
+            <button class="btn-search" type="button">SEARCH</button>
+        </div>
+        <div style="padding: 10px;">
+            <input type="checkbox" name="useCache" id="useCache" value="true" /> Use Cache
+        </div>
+
+    </form>
+
 </div>
 <script>
     var responseTime;
@@ -48,15 +71,17 @@
         }
         var getData = function (request, response) {
             var boolQueryType = $("input[type='radio'][name='boolquery']:checked");
-            responseTime = new Date().getTime();
             $.getJSON(
                 "http://localhost:8080/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
                 function (data) {
-                    response($.map(data, function (item) {
+                    //alert(JSON.stringify(data));
+                    response($.map(data.autocompList, function (item) {
+
                         return {
                             label: item.name
                         }
                     }));
+                    $("#responsetime").text(data.responseTime);
                 });
         };
         $("#search").autocomplete({
@@ -64,10 +89,9 @@
         }).data("ui-autocomplete")._renderItem = function(ul, item) {
             var $div = $("<div></div>").text(item.label);
             highlightText(this.term, $div);
-            $("#responsetime").text(new Date().getTime() - responseTime);
             return $("<li></li>").append($div).appendTo(ul);
         };
     });
 </script>
-<div id="debug"></div>
-</body>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

@@ -1,13 +1,15 @@
 package com.minsoo.autocomplete.service;
 
 import com.minsoo.autocomplete.domain.request.RequestParams;
+import com.minsoo.autocomplete.domain.response.AutoCompResults;
 import com.minsoo.autocomplete.logic.ElasticQueryBuilder;
 import com.minsoo.autocomplete.repository.ElasticRepository;
 import com.minsoo.autocomplete.util.StringHighlight;
+import org.apache.commons.lang3.time.StopWatch;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.HttpStatus;
@@ -43,7 +45,10 @@ public class SearchService {
     StringHighlight highlight;
 
     public ResponseEntity searchDocuments(RequestParams rp) {
+        StopWatch sw = new StopWatch();
+        sw.start();
 
+        AutoCompResults acr = new AutoCompResults();
         List autocompList = new ArrayList();
         String indices = "";
         if(EN_SUPPORT.equals(rp.getLanguage())) {
@@ -86,6 +91,10 @@ public class SearchService {
             autocompList = elasticRepository.queryForDocuments(searchQuery);
 
         }
-        return new ResponseEntity<>(autocompList, HttpStatus.OK);
+
+        acr.setAutocompList(autocompList);
+        sw.stop();
+        acr.setResponseTime(sw.getTime());
+        return new ResponseEntity<>(acr, HttpStatus.OK);
     }
 }

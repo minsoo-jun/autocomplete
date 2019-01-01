@@ -1,8 +1,7 @@
 package com.minsoo.autocomplete.util;
 
 import com.minsoo.autocomplete.domain.request.RequestParams;
-import com.minsoo.autocomplete.domain.response.EnDomain;
-import org.springframework.context.annotation.Bean;
+import com.minsoo.autocomplete.domain.EnDomain;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

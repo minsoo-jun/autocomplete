@@ -1,9 +1,10 @@
 package com.minsoo.autocomplete.controller;
 
 import com.minsoo.autocomplete.domain.request.RequestParams;
-import com.minsoo.autocomplete.domain.response.EnDomain;
+import com.minsoo.autocomplete.domain.EnDomain;
 import com.minsoo.autocomplete.service.AutocompleteService;
 import com.minsoo.autocomplete.service.SearchService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,12 @@ public class AutocompleteController {
             , @PathVariable(value = LANGUAGE) String language
             , @RequestParam(value = USE_CACHE, defaultValue = "false") boolean useCache
         ){
+
         //파라메터 세팅
         RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), useCache);
 
         System.out.println("## Search Keyword: " + searchWord);
 
-        //return as.getLikeAutocompleteData(rp);
         return ss.searchDocuments(rp);
     }
 }
