@@ -75,11 +75,12 @@
             $.getJSON(
                 "http://35.243.73.103:8080/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
                 function (data) {
-                    response($.map(data, function (item) {
+                    response($.map(data.autocompList, function (item) {
                         return {
                             label: item.name
                         }
                     }));
+                  $("#responsetime").text(data.responseTime);
                 });
         };
         $("#search").autocomplete({
@@ -87,7 +88,6 @@
         }).data("ui-autocomplete")._renderItem = function(ul, item) {
             var $div = $("<div></div>").text(item.label);
             highlightText(this.term, $div);
-            $("#responsetime").text(new Date().getTime() - responseTime);
             return $("<li></li>").append($div).appendTo(ul);
         };
     });

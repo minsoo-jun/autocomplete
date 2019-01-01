@@ -1,6 +1,6 @@
 package com.minsoo.autocomplete.repository;
 
-import com.minsoo.autocomplete.domain.EnDomain;
+import com.minsoo.autocomplete.domain.response.EnDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;

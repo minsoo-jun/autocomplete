@@ -1,4 +1,4 @@
-package com.minsoo.autocomplete.domain;
+package com.minsoo.autocomplete.domain.response;
 
 import com.minsoo.autocomplete.domain.Category;
 import org.springframework.data.annotation.Id;

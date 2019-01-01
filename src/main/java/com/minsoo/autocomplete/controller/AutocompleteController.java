@@ -1,7 +1,7 @@
 package com.minsoo.autocomplete.controller;
 
 import com.minsoo.autocomplete.domain.request.RequestParams;
-import com.minsoo.autocomplete.domain.EnDomain;
+import com.minsoo.autocomplete.domain.response.EnDomain;
 import com.minsoo.autocomplete.service.AutocompleteService;
 import com.minsoo.autocomplete.service.SearchService;
 

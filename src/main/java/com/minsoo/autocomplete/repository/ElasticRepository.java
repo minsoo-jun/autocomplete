@@ -1,6 +1,6 @@
 package com.minsoo.autocomplete.repository;
 
-import com.minsoo.autocomplete.domain.EnDomain;
+import com.minsoo.autocomplete.domain.response.EnDomain;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 import java.util.List;
