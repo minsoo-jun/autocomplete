@@ -5,11 +5,14 @@ public class RequestParams {
     private String searchWord;
     private String language;
     private boolean useCache;
+    // full name mode or word mode
+    private String mode;
 
-    public RequestParams(String searchWord, String language, boolean useCache) {
+    public RequestParams(String searchWord, String language, boolean useCache, String mode) {
         this.searchWord = searchWord;
         this.language = language;
         this.useCache = useCache;
+        this.mode = mode;
     }
 
     public String getSearchWord() {
@@ -23,5 +26,7 @@ public class RequestParams {
     public boolean isUseCache() {
         return useCache;
     }
+
+    public String getMode(){return mode;}
 
 }

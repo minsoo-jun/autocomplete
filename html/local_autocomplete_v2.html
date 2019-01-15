@@ -42,7 +42,11 @@
         <div style="padding: 10px;">
             <input type="checkbox" name="useCache" id="useCache" value="true" /> Use Cache
         </div>
-
+        <div style="padding: 10px;">
+            <input type="radio" name="mode" id="mode-fullname" value="fullname" checked/> Full Name Mode
+            &nbsp;
+            <input type="radio" name="mode" id="mode-word" value="word"/> Word Mode
+        </div>
     </form>
 
 </div>
@@ -72,13 +76,13 @@
         var getData = function (request, response) {
             var boolQueryType = $("input[type='radio'][name='boolquery']:checked");
             $.getJSON(
-                "http://localhost:8080/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
+                "http://localhost:8080/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked') + "&mode=" + $('input[name=mode]:checked').val(),
                 function (data) {
                     //alert(JSON.stringify(data));
                     response($.map(data.autocompList, function (item) {
 
                         return {
-                            label: item.name
+                            label: item.phrase
                         }
                     }));
                     $("#responsetime").text(data.responseTime);

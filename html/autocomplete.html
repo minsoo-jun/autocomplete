@@ -50,7 +50,7 @@
             var boolQueryType = $("input[type='radio'][name='boolquery']:checked");
             responseTime = new Date().getTime();
             $.getJSON(
-                "http://35.243.104.154/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
+                "http://35.221.107.158/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked'),
                 function (data) {
                     response($.map(data, function (item) {
                         return {

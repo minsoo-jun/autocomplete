@@ -1,6 +1,7 @@
 package com.minsoo.autocomplete.domain.response;
 
 import com.minsoo.autocomplete.domain.Category;
+import com.minsoo.autocomplete.domain.Refs;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Score;
@@ -20,6 +21,24 @@ public class EnDomain {
     private String image;
     // meta info
     private List<String> highlights;
+    private List<Refs> refs;
+    private String phrase;
+
+    public String getPhrase() {
+        return phrase;
+    }
+
+    public void setPhrase(String phrase) {
+        this.phrase = phrase;
+    }
+
+    public List<Refs> getRefs() {
+        return refs;
+    }
+
+    public void setRefs(List<Refs> refs) {
+        this.refs = refs;
+    }
 
     public List<String> getHighlights() {
         return highlights;
@@ -75,6 +94,8 @@ public class EnDomain {
                 + ",category:" + category
                 + ",url:" + url
                 + ",image:" + image
+                + ",refs:" + refs
+                + ",phrase:" + phrase
                 + "}";
     }
 }

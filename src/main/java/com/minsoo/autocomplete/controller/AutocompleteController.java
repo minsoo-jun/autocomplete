@@ -25,19 +25,22 @@ public class AutocompleteController {
     @Autowired
     SearchService ss;
 
-    //test curl -i -H 'Content-Type: application/json' -XGET 'http://localhost:8080/ec/autocomplete/en/hello'
     @GetMapping(value="/autocomplete/{language}/{searchWord}", produces = "application/json")
     @CrossOrigin
-    public ResponseEntity<List<EnDomain>> getAutocomplete(@PathVariable(SEARCH_WORD) String searchWord
+    public ResponseEntity<List<EnDomain>> getAutocompleteV2(@PathVariable(SEARCH_WORD) String searchWord
             , @PathVariable(value = LANGUAGE) String language
             , @RequestParam(value = USE_CACHE, defaultValue = "false") boolean useCache
-        ){
+            , @RequestParam(value = SEARCH_MODE, defaultValue = "fullname") String mode
+    ){
 
         //파라메터 세팅
-        RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), useCache);
+        RequestParams rp = new RequestParams(searchWord.trim(), language.trim(), useCache, mode);
 
         System.out.println("## Search Keyword: " + searchWord);
 
+        if("word".equals(mode)){
+            return ss.searchDocumentsV2(rp);
+        }
         return ss.searchDocuments(rp);
     }
 }
