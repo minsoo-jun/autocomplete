@@ -91,7 +91,8 @@ public class SearchService {
             }
         }else{
             System.out.println("### Data from es");
-
+            //delete all redis key
+            redisService.deleteAllkey();
             queryBuilder = elasticQueryBuilder.getQueryShouldBuilder(rp);
             SearchQuery searchQuery = new NativeSearchQueryBuilder()
                     .withIndices(indices)
@@ -146,7 +147,8 @@ public class SearchService {
             }
         }else{
             System.out.println("### Data from es V2");
-
+            //delete all redis key
+            redisService.deleteAllkey();
             queryBuilder = elasticQueryBuilder.getQueryShouldBuilder(rp);
             SearchQuery searchQuery = new NativeSearchQueryBuilder()
                     .withIndices(indices)
