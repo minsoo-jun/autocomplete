@@ -58,7 +58,7 @@ public class SearchService {
     public ResponseEntity searchDocuments(RequestParams rp) {
         StopWatch sw = new StopWatch();
         sw.start();
-
+        String redisKey = rp.getMode()+ ":" + rp.getSearchWord();
         AutoCompResults acr = new AutoCompResults();
         List autocompList = new ArrayList();
         String indices = "";
@@ -71,7 +71,7 @@ public class SearchService {
         QueryBuilder queryBuilder;
         if(rp.isUseCache()){
             System.out.println("*** Data from redis");
-            autocompList = redisService.getFromRedis(rp.getSearchWord()) ;
+            autocompList = redisService.getFromRedis(redisKey) ;
             if(autocompList == null || autocompList.size() < 1){
                 System.out.println("*** No Data in redis");
                 queryBuilder = elasticQueryBuilder.getQueryShouldBuilder(rp);
@@ -86,7 +86,7 @@ public class SearchService {
 
                 if(autocompList.size() > 0) {
                     System.out.println("*** data set to redis");
-                    redisService.setToReids(rp.getSearchWord(), autocompList);
+                    redisService.setToReids(redisKey, autocompList);
                 }
             }
         }else{

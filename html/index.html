@@ -77,7 +77,7 @@
             var boolQueryType = $("input[type='radio'][name='boolquery']:checked");
             responseTime = new Date().getTime();
             $.getJSON(
-                "http://35.221.107.158/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked') + "&mode=" + $('input[name=mode]:checked').val(),
+                "http://manggu.ml/ec/autocomplete/en/" + request.term + "?useCache=" + $("#useCache").is(':checked') + "&mode=" + $('input[name=mode]:checked').val(),
                 function (data) {
                     response($.map(data.autocompList, function (item) {
                         return {
