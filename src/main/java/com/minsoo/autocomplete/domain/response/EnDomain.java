@@ -23,13 +23,21 @@ public class EnDomain {
     private List<String> highlights;
     private List<Refs> refs;
     private String phrase;
-
+    private int popurality = 0;
     public String getPhrase() {
         return phrase;
     }
 
     public void setPhrase(String phrase) {
         this.phrase = phrase;
+    }
+
+    public int getPopurality() {
+        return popurality;
+    }
+
+    public void setPopurality(int popurality) {
+        this.popurality = popurality;
     }
 
     public List<Refs> getRefs() {

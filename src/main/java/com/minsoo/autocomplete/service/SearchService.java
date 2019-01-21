@@ -5,11 +5,14 @@ import com.minsoo.autocomplete.domain.response.AutoCompResults;
 import com.minsoo.autocomplete.domain.response.EnDomain;
 import com.minsoo.autocomplete.logic.ElasticQueryBuilder;
 import com.minsoo.autocomplete.repository.ElasticRepository;
+import com.minsoo.autocomplete.util.SortingByPopularity;
 import com.minsoo.autocomplete.util.StringHighlight;
 import org.apache.commons.lang3.time.StopWatch;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -80,6 +84,7 @@ public class SearchService {
                         .withTypes(DOCUMENT_TYPE)
                         .withQuery(queryBuilder)
                         .withHighlightFields(new HighlightBuilder.Field(TARGET_FIELD))
+                        //.withSort(SortBuilders.fieldSort("popurality").order(SortOrder.DESC))
                         .build();
                 autocompList = elasticRepository.queryForDocuments(searchQuery);
 
@@ -98,12 +103,13 @@ public class SearchService {
                     .withIndices(indices)
                     .withTypes(DOCUMENT_TYPE)
                     .withQuery(queryBuilder)
+                    //.withSort(SortBuilders.fieldSort("popurality").order(SortOrder.DESC))
                     .withHighlightFields(new HighlightBuilder.Field(TARGET_FIELD))
                     .build();
             autocompList = elasticRepository.queryForDocuments(searchQuery);
 
         }
-
+        Collections.sort(autocompList, new SortingByPopularity());
         acr.setAutocompList(autocompList);
         sw.stop();
         acr.setResponseTime(sw.getTime());
